@@ -1,0 +1,32 @@
+{
+  "name": "binar-challenge-fw-c6",
+  "version": "1.0.0",
+  "description": "Challenge FW C6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nursalli/Binar-Challenge-FW-C6.git"
+  },
+  "keywords": [],
+  "author": "Muhammad Nursalli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nursalli/Binar-Challenge-FW-C6/issues"
+  },
+  "homepage": "https://github.com/Nursalli/Binar-Challenge-FW-C6#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.1",
+    "sequelize": "^6.20.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.16"
+  }
+}
