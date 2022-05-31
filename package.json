@@ -2,10 +2,10 @@
   "name": "binar-challenge-fw-c6",
   "version": "1.0.0",
   "description": "Challenge FW C6",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "bcryptjs": "^2.4.3",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "express-ejs-layouts": "^2.5.1",
     "express-validator": "^6.14.1",
     "sequelize": "^6.20.1"
   },

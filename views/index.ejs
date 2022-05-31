@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Muhammad Nursalli">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title><%= page %></title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/bootstrap5/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="/css/styleLogin.css">
+</head>
+
+<body class="text-center">
+
+    <main class="form-signin">
+        <form action="/" method="POST">
+            <img class="mb-4" src="/img/logo-binar.png" alt="" width="100" height="100">
+            <h1 class="h3 mb-3 fw-normal">Please Login</h1>
+
+            <div class="form-floating">
+                <label for="floatingEmail">Email address</label>
+                <input type="email" class="form-control" id="floatingEmail" name="email" placeholder="name@example.com">
+            </div>
+            <div class="form-floating">
+                <label for="floatingPassword">Password</label>
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Enter Password">
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+            <p class="mt-5 mb-3 text-muted">&copy; <%= author %> <%= copyrightYear %> </p>
+        </form>
+    </main>
+
+</body>
+
+</html>
