@@ -33,6 +33,8 @@ app.get('/', (req, res) => {
     });
 });
 
+
+//Web Page
 const { routerDashboard } = require('./router/router-dashboard');
 app.use('/dashboard', routerDashboard);
 
@@ -70,7 +72,7 @@ app.listen(port, () => {
 
 // user_game:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
-// 2. username (VARCHAR(100) NOT NULL)
+// 2. username (VARCHAR(100) NOT NULL UNIQUE)
 // 3. password (VARCHAR(100) NOT NULL)
 
 // user_game_biodata:
@@ -84,5 +86,5 @@ app.listen(port, () => {
 // user_game_history:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. id_user (INT NOT NULL FOREIGN KEY)
-// 3. time (VARCHAR(100) NOT NULL)
+// 3. time_in_minute (INT NOT NULL)
 // 4. score (INT NOT NULL)
