@@ -3,7 +3,7 @@ const routerLogin = express.Router();
 const { body } = require('express-validator');
 
 //Contoller
-const { index, authentication } = require('../controllers/auth');
+const { index, authentication, logout } = require('../controllers/auth');
 
 routerLogin.get('/', index);
 
@@ -13,5 +13,7 @@ routerLogin.post('/',
         body('password').notEmpty()
     ],
     authentication);
+
+routerLogin.get('/logout', logout);
 
 module.exports = { routerLogin }

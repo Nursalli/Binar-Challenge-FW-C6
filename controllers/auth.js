@@ -1,9 +1,9 @@
-const { User_games, User_games_biodata, User_games_histories } = require('../models');
+const { User_games } = require('../models');
 
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require("dotenv").config();
+require('dotenv').config();
 
 const index = (req, res) => {
     const page = 'Login Page';
@@ -14,7 +14,8 @@ const index = (req, res) => {
         layout: false,
         page,
         author, 
-        copyrightYear
+        copyrightYear,
+        msg: req.flash('msg')
     });
 }
 
@@ -26,6 +27,7 @@ const authentication = async (req, res) => {
         // res.status(400).json({
         //     errors: errors.array()
         // });
+        req.flash('msg', "Username/Password Can't be Empty!");
         res.redirect('/');
     } else {
         // res.json({
@@ -50,28 +52,35 @@ const authentication = async (req, res) => {
                 }
 
                 jwt.sign({ userToken }, process.env.JWT_KEY, {
-                    expiresIn: '1d'
+                    expiresIn: '20s'
                 }, (err, token) => {
                     // res.status(200).json({ token: token });
+                    // res.setHeader('Authorization', 'Bearer '+ token);
                     res.redirect('/dashboard');
                 });
 
             } else {
                 // res.status(400).json({
-                //     status: 'Login Unsuccessfull'
+                //     status: 'Login Unsuccessful'
                 // })
                 // return false;
+                req.flash('msg', 'Wrong Username/Password!');
                 res.redirect('/');
             }
         } else {
             // res.status(400).json({
-            //     status: 'Login Unsuccessfull'
+            //     status: 'Login Unsuccessful'
             // })
             // return false;
+            req.flash('msg', 'Wrong Username/Password!');
             res.redirect('/');
         }
 
     }
 }
 
-module.exports = { index, authentication }
+const logout = (req, res) => {
+    res.redirect('/');
+}
+
+module.exports = { index, authentication, logout }
