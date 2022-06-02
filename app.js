@@ -20,21 +20,10 @@ app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-    const page = 'Login Page';
-    const author = 'Muhammad Nursalli';
-    const copyrightYear = new Date().getFullYear();
-
-    res.render('index', {
-        layout: false,
-        page,
-        author, 
-        copyrightYear
-    });
-});
-
-
 //Web Page
+const { routerLogin } = require('./router/router-login');
+app.use('/', routerLogin);
+
 const { routerDashboard } = require('./router/router-dashboard');
 app.use('/dashboard', routerDashboard);
 

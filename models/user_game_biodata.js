@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User_game_biodata.hasOne(User_games, {
+      models.User_games.hasOne(User_game_biodata, {
         foreignKey: 'id_user'
       });
-      User_games.belongsTo(User_game_biodata);
+      User_game_biodata.belongsTo(models.User_games);
     }
   }
   User_game_biodata.init({
