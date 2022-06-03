@@ -17,6 +17,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      user_token: {
+        type: Sequelize.STRING
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.DataTypes.ENUM('Super User', 'User'),
+        defaultValue: 'User'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

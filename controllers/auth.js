@@ -43,9 +43,10 @@ const authentication = async (req, res) => {
         });
 
         if(checkUsername){
-            const checkPassword = bcrypt.compareSync(password, checkUsername.password)
+            const checkPassword = bcrypt.compareSync(password, checkUsername.password);
+            const checkSuperUser = (checkUsername.role === 'Super User') ? true : false;
 
-            if(checkPassword){
+            if(checkPassword && checkSuperUser){
                 const userToken = {
                     id: checkUsername.id,
                     username: checkUsername.username

@@ -43,13 +43,12 @@ const { routerLogin } = require('./router/router-login');
 const { routerDashboard } = require('./router/router-dashboard');
 const { routerDataUsers } = require('./router/router-data-users');
 const { routerBiodataUsers } = require('./router/router-biodata-users');
+const { routerHistoryUsers } = require('./router/router-history-users');
 
 app.use('/', routerLogin);
 app.use('/dashboard', routerDashboard);
 app.use('/dashboard/data-users', routerDataUsers);
 app.use('/dashboard/biodata-users', routerBiodataUsers);
-
-const { routerHistoryUsers } = require('./router/router-history-users');
 app.use('/dashboard/history-users', routerHistoryUsers);
 
 //Error Handling Middleware (Internal Server Error)

@@ -6,14 +6,16 @@ module.exports = {
   async up (queryInterface, Sequelize) {
      await queryInterface.bulkInsert('User_games', [
        {
-        username: 'nursalli',
-        password: bcrypt.hashSync('password', 10),
+        username: 'admin',
+        password: bcrypt.hashSync('admin123', 10),
+        user_token: null,
+        role: 'Super User',
         createdAt: new Date(),
         updatedAt: new Date()
        },
       //  {
-      //   username: 'nursalli2',
-      //   password: bcrypt.hashSync('password', 10),
+      //   username: 'nursalli',
+      //   password: bcrypt.hashSync('nursalli123', 10),
       //   createdAt: new Date(),
       //   updatedAt: new Date()
       // },

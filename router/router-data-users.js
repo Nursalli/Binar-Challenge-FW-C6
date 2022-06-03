@@ -1,37 +1,28 @@
 const express = require('express');
 const routerDataUsers = express.Router();
+const { body } = require('express-validator');
 
-routerDataUsers.get('/', (req, res) => {
-    const page = 'Data Users Page';
-    const title = 'Data Users';
+//Contoller
+const { index, duplicate, add, addPost, edit } = require('../controllers/user-games');
 
-    res.render('dashboard/data-users', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
+routerDataUsers.get('/', index);
 
-routerDataUsers.get('/add', (req, res) => {
-    const page = 'Data Users Page';
-    const title = 'Add Data Users';
+routerDataUsers.get('/add', add);
 
-    res.render('dashboard/add/add-data-user', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
+routerDataUsers.post('/add', 
+    [
+        body('username').custom(async (data) => {
+            const check = await duplicate(data);
+            if(check){
+                throw new Error('Username Already Exists');
+            }else{
+                return true;
+            }
+        }),
+        body('password').isLength({ min: 5})
+    ],
+    addPost);
 
-routerDataUsers.get('/edit/:id', (req, res) => {
-    const page = 'Data Users Page';
-    const title = 'Edit Data Users';
+routerDataUsers.get('/edit/:id', edit);
 
-    res.render('dashboard/edit/edit-data-user', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
-
-module.exports = { routerDataUsers }
+module.exports = { routerDataUsers } 
