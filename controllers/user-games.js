@@ -21,7 +21,8 @@ const index = async (req, res) => {
         page,
         title,
         data,
-        msg: req.flash('msg')
+        msg: req.flash('msg'),
+        msgError: req.flash('msgError')
     });
 }
 
@@ -69,15 +70,95 @@ const addPost = (req, res) => {
     }
 }
 
-const edit = (req, res) => {
+const findUser = (id) => {
+    return User_games.findOne({
+        where: {
+            id
+        }
+    });
+}
+
+const edit = async (req, res) => {
     const page = 'Data Users Page';
     const title = 'Edit Data Users';
+
+    const data = await findUser(parseInt(req.params.id));
 
     res.render('dashboard/edit/edit-data-user', {
         layout: 'dashboard/layouts/main',
         page,
-        title
+        title,
+        data
     });
 }
 
-module.exports = { index, duplicate, add, addPost, edit }
+const editPost = async (req, res) => {
+    const errors = validationResult(req);
+
+    const user = await findUser(parseInt(req.params.id));
+
+    if(user){
+        if(!errors.isEmpty()){
+            const page = 'Data Users Page';
+            const title = 'Edit Data Users';
+    
+            res.render('dashboard/edit/edit-data-user', {
+                layout: 'dashboard/layouts/main',
+                page,
+                title,
+                errors: errors.array(),
+                data: {
+                    id: req.params.id,
+                    username: req.body.username
+                }
+            });
+        } else {
+            let newData = {};
+    
+            if(req.body.password.length > 0){
+                newData = {
+                    username: req.body.username,
+                    password: bcrypt.hashSync(req.body.password, 10)
+                }
+            } else {
+                newData = {
+                    username: req.body.username
+                }
+            } 
+    
+            User_games.update(newData, {
+                    where: {
+                        id: req.params.id
+                    }
+                })
+                    .then((data) => {
+                        req.flash('msg', 'Data User Updated!');
+                        res.redirect('/dashboard/data-users');
+                    });
+        }
+    } else {
+        req.flash('msgError', 'User Not Found!');
+        res.redirect('/dashboard/data-users');
+    }
+}
+
+const deletePost = async (req, res) => {
+    const user = await findUser(req.params.id);
+    
+    if(user){
+        User_games.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+            .then((data) => {
+                req.flash('msg', 'Data User Deleted!');
+                res.redirect('/dashboard/data-users');
+            });
+    }else{
+        req.flash('msgError', 'User Not Found!');
+        res.redirect('/dashboard/data-users');
+    }
+}
+
+module.exports = { index, duplicate, add, addPost, findUser, edit, editPost, deletePost }

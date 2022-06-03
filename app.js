@@ -5,6 +5,7 @@ const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const methodOverride = require('method-override');
 
 //Init Express and Assignment Const Port
 const app = express();
@@ -34,6 +35,9 @@ app.use(
     })
 );
 app.use(flash());
+
+//Setup Method Override
+app.use(methodOverride('_method'));
 
 //Middleware Login
 const { verifyToken } = require('./middleware/verify');

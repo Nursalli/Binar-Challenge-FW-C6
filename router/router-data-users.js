@@ -3,7 +3,7 @@ const routerDataUsers = express.Router();
 const { body } = require('express-validator');
 
 //Contoller
-const { index, duplicate, add, addPost, edit } = require('../controllers/user-games');
+const { index, duplicate, add, addPost, findUser, edit, editPost, deletePost } = require('../controllers/user-games');
 
 routerDataUsers.get('/', index);
 
@@ -19,10 +19,35 @@ routerDataUsers.post('/add',
                 return true;
             }
         }),
+        body('username').notEmpty(),
         body('password').isLength({ min: 5})
     ],
     addPost);
 
 routerDataUsers.get('/edit/:id', edit);
+
+routerDataUsers.put('/edit/:id', 
+    [
+        body('username').custom(async (data, { req }) => {
+            const user = await findUser(req.params.id);
+            const check = await duplicate(data);
+            if(user.username !== req.body.username && check){
+                throw new Error('Username Already Exists');
+            }else{
+                return true;
+            }
+        }),
+        body('username').notEmpty(),
+        body('password').custom(data => {
+            if(data.length !== 0 && data.length < 5){
+                throw new Error('Password Must be at Least 5 Character');
+            } else {
+                return true;
+            }
+        })
+    ],
+    editPost)
+
+routerDataUsers.delete('/delete/:id', deletePost)
 
 module.exports = { routerDataUsers } 
