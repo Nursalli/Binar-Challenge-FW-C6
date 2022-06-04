@@ -82,6 +82,8 @@ app.listen(port, () => {
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. username (VARCHAR(100) NOT NULL UNIQUE)
 // 3. password (VARCHAR(100) NOT NULL)
+// 4. user_token (VARCHAR(100))
+// 5. role (ENUM('Super User', 'User') NOT NULL DEFAULT 'User')
 
 // user_game_biodata:
 // 1. id (INT NOT NULL AUTO_INCREMENT)

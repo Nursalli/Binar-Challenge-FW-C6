@@ -46,8 +46,8 @@ routerDataUsers.put('/edit/:id',
             }
         })
     ],
-    editPost)
+    editPost);
 
-routerDataUsers.delete('/delete/:id', deletePost)
+routerDataUsers.delete('/delete/:id', deletePost);
 
 module.exports = { routerDataUsers } 

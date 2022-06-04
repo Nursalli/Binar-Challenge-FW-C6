@@ -143,6 +143,7 @@ const editPost = async (req, res) => {
 }
 
 const deletePost = async (req, res) => {
+    //cek id_user di tabel biodata dan history
     const user = await findUser(req.params.id);
     
     if(user){

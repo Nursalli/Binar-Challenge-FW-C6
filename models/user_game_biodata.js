@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       models.User_games.hasOne(User_game_biodata, {
         foreignKey: 'id_user'
       });
-      User_game_biodata.belongsTo(models.User_games);
+      User_game_biodata.belongsTo(models.User_games, {
+        foreignKey: 'id'
+      });
     }
   }
   User_game_biodata.init({
@@ -29,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     birthdate: {
       type: DataTypes.DATE,
