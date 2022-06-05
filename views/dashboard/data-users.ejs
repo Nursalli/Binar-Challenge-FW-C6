@@ -29,8 +29,8 @@
                         <a href="/dashboard/data-users/edit/<%= user.id %>" class="badge bg-warning text-decoration-none text-dark">
                             <i class="bi bi-pencil-square"></i> Edit
                         </a>
-                        <a href="#" class="badge bg-danger text-decoration-none deleteDataUser" data-id="<%= user.id %>" data-bs-toggle="modal"
-                            data-bs-target="#deleteDataUser">
+                        <a href="#" class="badge bg-danger text-decoration-none deleteDataUserGames" data-id="<%= user.id %>" data-bs-toggle="modal"
+                            data-bs-target="#deleteDataUserGames">
                             <i class="bi bi-trash"></i> Delete
                         </a>
                     </td>
@@ -41,7 +41,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="deleteDataUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteDataUserGames" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

@@ -180,4 +180,155 @@ const addPost = async (req, res) => {
     }
 }
 
-module.exports = { index, add, checkUser, duplicateUserBiodata, duplicateEmailBiodata, checkBirthdateBiodata, addPost }
+const edit = async (req, res) => {
+    const page = 'Biodata Users Page';
+    const title = 'Edit Biodata Users';
+
+    let checkData = await User_game_biodata.findAll({
+        attributes: ['id_user'],
+        where: {
+            id: {
+                [Op.ne] : req.params.id
+            }
+        }
+    });
+
+    checkData = checkData.map(i => i.id_user);
+
+    const dataUserGames = await User_games.findAll({
+        where: {
+            [Op.and] : {
+                id: {
+                    [Op.notIn] : checkData
+                },
+                role: {
+                    [Op.ne] : 'Super User'
+                }
+            }
+        }
+    });
+
+    const data = await User_game_biodata.findOne({
+        where: {
+            id: req.params.id
+        }
+    });
+
+    res.render('dashboard/edit/edit-biodata-user', {
+        layout: 'dashboard/layouts/main',
+        page,
+        title,
+        dataUserGames,
+        data
+    });
+}
+
+const findUserBiodata = (id) => {
+    return User_game_biodata.findOne({
+        where: {
+            id : id
+        }
+    })
+}
+
+const editPost = async (req, res) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        const page = 'Biodata Users Page';
+        const title = 'Edit Biodata Users';
+
+        let checkData = await User_game_biodata.findAll({
+            attributes: ['id_user'],
+            where: {
+                id: {
+                    [Op.ne] : req.params.id
+                }
+            }
+        });
+
+        checkData = checkData.map(i => i.id_user);
+
+        const dataUserGames = await User_games.findAll({
+            where: {
+                [Op.and] : {
+                    id: {
+                        [Op.notIn] : checkData
+                    },
+                    role: {
+                        [Op.ne] : 'Super User'
+                    }
+                }
+            }
+        });
+
+        res.render('dashboard/edit/edit-biodata-user', {
+            layout: 'dashboard/layouts/main',
+            page,
+            title,
+            errors: errors.array(),
+            dataUserGames,
+            data: {
+                id: req.params.id,
+                id_user: req.body.id_user,
+                name: req.body.name,
+                email: req.body.email,
+                birthdateOld: req.body.birthdate,
+                country: req.body.country
+            }
+        });
+    } else {
+        const country = req.body.country;
+
+        let newData = {};
+
+        if(country === ""){
+            newData = {
+                id_user: req.body.id_user,
+                name: req.body.name,
+                email: req.body.email,
+                birthdate: req.body.birthdate,
+                country: 'Indonesia'
+            }
+        } else {
+            newData = {
+                id_user: req.body.id_user,
+                name: req.body.name,
+                email: req.body.email,
+                birthdate: req.body.birthdate,
+                country: req.body.country
+            }
+        }
+
+        User_game_biodata.update(newData, {
+            where: {
+                id:req.params.id
+            }
+        })
+            .then((data) => {
+                req.flash('msg', 'Data User Updated!');
+                res.redirect('/dashboard/biodata-users');
+            });
+    }
+}
+
+const deletePost = async (req, res) => {
+    const user = await findUserBiodata(req.params.id);
+    
+    if(user){
+        User_game_biodata.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
+            .then((data) => {
+                req.flash('msg', 'Biodata User Deleted!');
+                res.redirect('/dashboard/biodata-users');
+            });
+    }else{
+        req.flash('msgError', 'Biodata Not Found!');
+        res.redirect('/dashboard/biodata-users');
+    }
+}
+
+module.exports = { index, add, checkUser, duplicateUserBiodata, duplicateEmailBiodata, checkBirthdateBiodata, addPost, edit, findUserBiodata, editPost, deletePost }
