@@ -5,21 +5,19 @@
             <tr>
                 <th>#Rangking</th>
                 <th>ID User</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Time</th>
+                <th>Time (Minute)</th>
                 <th>Score</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>U0001</td>
-                <td>Name1</td>
-                <td>Email1</td>
-                <td>1 Minute</td>
-                <td>100</td>
-            </tr>
+            <% data.forEach((user, i) => { %>
+                <tr>
+                    <td><%= i + 1 %></td>
+                    <td><%= user.id_user %></td>
+                    <td><%= user.time %></td>
+                    <td><%= user.score %></td>
+                </tr>
+            <% }) %>
         </tbody>
     </table>
 </div>

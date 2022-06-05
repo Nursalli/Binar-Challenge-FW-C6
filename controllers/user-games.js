@@ -1,4 +1,4 @@
-const { User_games } = require('../models');
+const { User_games, User_game_biodata, User_game_histories } = require('../models');
 const { Op } = require("sequelize");
 
 const { validationResult } = require('express-validator');
@@ -142,23 +142,46 @@ const editPost = async (req, res) => {
     }
 }
 
+const findBiodata = (user_id) => {
+    return User_game_biodata.findOne({
+        where: {
+            id_user: user_id
+        }
+    });
+}
+
+const findHistory = (user_id) => {
+    return User_game_histories.findOne({
+        where: {
+            id_user: user_id
+        }
+    });
+}
+
 const deletePost = async (req, res) => {
-    //cek id_user di tabel biodata dan history
     const user = await findUser(req.params.id);
+
+    const checkBiodata = await findBiodata(req.params.id);
+    const checkHistory = await findHistory(req.params.id);
     
-    if(user){
-        User_games.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-            .then((data) => {
-                req.flash('msg', 'Data User Deleted!');
-                res.redirect('/dashboard/data-users');
-            });
-    }else{
-        req.flash('msgError', 'User Not Found!');
+    if(checkBiodata || checkHistory){
+        req.flash('msgError', 'User is Used in Another Table!');
         res.redirect('/dashboard/data-users');
+    } else {
+        if(user){
+            User_games.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+                .then((data) => {
+                    req.flash('msg', 'Data User Deleted!');
+                    res.redirect('/dashboard/data-users');
+                });
+        }else{
+            req.flash('msgError', 'User Not Found!');
+            res.redirect('/dashboard/data-users');
+        }
     }
 }
 
