@@ -1,5 +1,6 @@
 const deleteDataUserGames = document.querySelectorAll('.deleteDataUserGames');
 const deleteDataUserBiodata = document.querySelectorAll('.deleteBiodataUser');
+const deleteHistoryUser = document.querySelectorAll('.deleteHistoryUser');
 
 deleteDataUserGames.forEach((ddu) => {
     ddu.addEventListener('click', () => {
@@ -16,5 +17,14 @@ deleteDataUserBiodata.forEach((ddu) => {
         const form = document.querySelector('.modal-content form');
     
         form.setAttribute('action', '/dashboard/biodata-users/delete/' + id + '?_method=DELETE');
+    });
+});
+
+deleteHistoryUser.forEach((ddu) => {
+    ddu.addEventListener('click', () => {
+        const id = ddu.dataset.id;
+        const form = document.querySelector('.modal-content form');
+    
+        form.setAttribute('action', '/dashboard/history-users/delete/' + id + '?_method=DELETE');
     });
 });

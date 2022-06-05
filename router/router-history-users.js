@@ -1,37 +1,30 @@
 const express = require('express');
 const routerHistoryUsers = express.Router();
+const { body } = require('express-validator');
 
-routerHistoryUsers.get('/', (req, res) => {
-    const page = 'History Users Page';
-    const title = 'History Users';
+//Contoller
+const { index, checkUser, add, addPost, deletePost } = require('../controllers/user-histories');
 
-    res.render('dashboard/history-users', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
+routerHistoryUsers.get('/', index);
 
-routerHistoryUsers.get('/add', (req, res) => {
-    const page = 'History Users Page';
-    const title = 'Add History Users';
+routerHistoryUsers.get('/add', add);
 
-    res.render('dashboard/add/add-history-user', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
+routerHistoryUsers.post('/add', 
+    [
+        body('id_user').custom(async (data) => {
+            const checkUserGames = await checkUser(parseInt(data));
+            if(!checkUserGames){
+                throw new Error('User Invalid');
+            }else {
+                return true;
+            }
+        }),
+        body('id_user').notEmpty(),
+        body('time').isInt({ min: 1 }),
+        body('score').isInt({ min: 1, max: 100 })
+    ],
+    addPost);
 
-routerHistoryUsers.get('/edit/:id', (req, res) => {
-    const page = 'History Users Page';
-    const title = 'Edit History Users';
-
-    res.render('dashboard/edit/edit-history-user', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title
-    });
-});
+routerHistoryUsers.delete('/delete/:id', deletePost);
 
 module.exports = { routerHistoryUsers }
