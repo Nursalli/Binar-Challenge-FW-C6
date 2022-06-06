@@ -1,4 +1,4 @@
-const { sequelize, User_game_histories } = require('../models');
+const { sequelize, User_games, User_game_histories } = require('../models');
 
 const index = async (req, res) => {
     const page = 'Dashboard Page';
@@ -10,7 +10,7 @@ const index = async (req, res) => {
             [sequelize.fn('sum', sequelize.col('time')), 'time'],
             [sequelize.fn('sum', sequelize.col('score')), 'score'],
           ],
-          group: ['id_user']
+        group: ['id_user']
         });
 
     data = data.map(i => {
@@ -23,7 +23,16 @@ const index = async (req, res) => {
 
     data.sort(function(a, b) { 
         return b.score - a.score;
-    })
+    });
+
+    //Join?
+    // const data = await User_games.findAll({
+    //     include: [{
+    //       model: User_game_histories
+    //      }]
+    //   });
+
+    // res.send(data);
       
     res.render('dashboard/index', {
         layout: 'dashboard/layouts/main',

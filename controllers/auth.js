@@ -3,7 +3,6 @@ const { User_games } = require('../models');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const index = (req, res) => {
     const page = 'Login Page';

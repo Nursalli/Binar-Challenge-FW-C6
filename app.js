@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
+require('dotenv').config();
 
 //Init Express and Assignment Const Port
 const app = express();
@@ -96,5 +97,5 @@ app.listen(port, () => {
 // user_game_history:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. id_user (INT NOT NULL FOREIGN KEY)
-// 3. time_in_minute (INT NOT NULL)
+// 3. time (INT NOT NULL)
 // 4. score (INT NOT NULL)
