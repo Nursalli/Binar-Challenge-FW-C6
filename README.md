@@ -50,7 +50,7 @@ $ npm run db:seed:all
 $ npm run start
 ```
 Login Access (localhost:3000):
-Username: admin,
+Username: admin |
 Password: admin123
 
 Noted: Authorization not completed (like logout and check every page must be login before) but still work for login and you can access localhost:3000/dashboard for access dashboard without login :V

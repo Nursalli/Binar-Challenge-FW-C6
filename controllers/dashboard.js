@@ -1,5 +1,7 @@
+//Connect Models
 const { sequelize, User_games, User_game_histories } = require('../models');
 
+//Handler
 const index = async (req, res) => {
     const page = 'Dashboard Page';
     const title = 'Dashboard';
@@ -25,13 +27,12 @@ const index = async (req, res) => {
         return b.score - a.score;
     });
 
-    //Join?
+    //Join Table?
     // const data = await User_games.findAll({
     //     include: [{
     //       model: User_game_histories
     //      }]
     //   });
-
     // res.send(data);
       
     res.render('dashboard/index', {

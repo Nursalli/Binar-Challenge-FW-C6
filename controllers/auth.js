@@ -1,9 +1,12 @@
+//Connect Models
 const { User_games } = require('../models');
 
+//Third-Party Module
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+//Handler
 const index = (req, res) => {
     const page = 'Login Page';
     const author = 'Muhammad Nursalli';
@@ -23,15 +26,9 @@ const authentication = async (req, res) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
-        // res.status(400).json({
-        //     errors: errors.array()
-        // });
         req.flash('msg', "Username/Password Can't be Empty!");
         res.redirect('/');
     } else {
-        // res.json({
-        //     status: 'success'
-        // });
         const username = req.body.username;
         const password = req.body.password;
 
@@ -60,18 +57,10 @@ const authentication = async (req, res) => {
                 });
 
             } else {
-                // res.status(400).json({
-                //     status: 'Login Unsuccessful'
-                // })
-                // return false;
                 req.flash('msg', 'Wrong Username/Password!');
                 res.redirect('/');
             }
         } else {
-            // res.status(400).json({
-            //     status: 'Login Unsuccessful'
-            // })
-            // return false;
             req.flash('msg', 'Wrong Username/Password!');
             res.redirect('/');
         }

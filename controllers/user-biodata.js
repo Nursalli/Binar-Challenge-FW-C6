@@ -1,8 +1,11 @@
+//Connect Models
 const { User_games, User_game_biodata } = require('../models');
-const { Op } = require("sequelize");
 
+//Third-Party Module
+const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
 
+//Handler
 const index = async (req, res) => {
     const page = 'Biodata Users Page';
     const title = 'Biodata Users';
@@ -102,6 +105,19 @@ const duplicateEmailBiodata = (user_email) => {
     return User_game_biodata.findOne({
         where: {
             email : user_email
+        }
+    })
+}
+
+const duplicateEmailNewBiodata = (id, user_email) => {
+    return User_game_biodata.findOne({
+        where: {
+            [Op.and] : {
+                id: {
+                    [Op.ne] : id
+                },
+                email: user_email
+            }
         }
     })
 }
@@ -331,4 +347,4 @@ const deletePost = async (req, res) => {
     }
 }
 
-module.exports = { index, add, checkUser, duplicateUserBiodata, duplicateEmailBiodata, checkBirthdateBiodata, addPost, edit, findUserBiodata, editPost, deletePost }
+module.exports = { index, add, checkUser, duplicateUserBiodata, duplicateEmailBiodata, duplicateEmailNewBiodata, checkBirthdateBiodata, addPost, edit, findUserBiodata, editPost, deletePost }

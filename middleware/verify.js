@@ -1,6 +1,8 @@
+//Third-Party Module
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
 
+//Handler
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; 

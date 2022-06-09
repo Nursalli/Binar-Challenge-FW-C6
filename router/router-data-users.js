@@ -1,3 +1,4 @@
+//Third-Party Module
 const express = require('express');
 const routerDataUsers = express.Router();
 const { body } = require('express-validator');
@@ -5,6 +6,7 @@ const { body } = require('express-validator');
 //Contoller
 const { index, duplicate, add, addPost, findUser, edit, editPost, deletePost } = require('../controllers/user-games');
 
+//Endpoint Router
 routerDataUsers.get('/', index);
 
 routerDataUsers.get('/add', add);

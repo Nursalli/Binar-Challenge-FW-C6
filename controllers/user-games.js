@@ -1,9 +1,12 @@
+//Connect Models
 const { User_games, User_game_biodata, User_game_histories } = require('../models');
-const { Op } = require("sequelize");
 
+//Third-Party Module
+const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
+//Handler
 const index = async (req, res) => {
     const page = 'Data Users Page';
     const title = 'Data Users';

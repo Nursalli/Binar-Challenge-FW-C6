@@ -1,8 +1,11 @@
+//Connect Models
 const { User_games, User_game_histories } = require('../models');
-const { Op } = require("sequelize");
 
+//Third-Party Module
+const { Op } = require("sequelize");
 const { validationResult } = require('express-validator');
 
+//Handler
 const index = async (req, res) => {
     const page = 'History Users Page';
     const title = 'History Users';

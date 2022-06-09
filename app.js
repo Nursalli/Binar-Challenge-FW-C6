@@ -14,13 +14,13 @@ const port = 3000;
 
 //Set View Engine EJS
 app.set('view engine', 'ejs');
-app.use(expressLayouts);
 
 //Third-Party Middleware (For logger and Layouts)
 app.use(morgan('dev'));
+app.use(expressLayouts);
 
 //Use Middleware
-//Built-in Middleware (For ead Public Directory, JSON File and Parsing x-www-urlencoded)
+//Built-in Middleware (For add Public Directory, JSON File and Parsing x-www-urlencoded)
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: false }));
@@ -37,13 +37,13 @@ app.use(
 );
 app.use(flash());
 
-//Setup Method Override
-app.use(methodOverride('_method'));
-
 //Middleware Login
 const { verifyToken } = require('./middleware/verify');
 
-//Web Page
+//Setup Method Override
+app.use(methodOverride('_method'));
+
+//Web Page Router
 const { routerLogin } = require('./router/router-login');
 const { routerDashboard } = require('./router/router-dashboard');
 const { routerDataUsers } = require('./router/router-data-users');
@@ -76,17 +76,19 @@ app.listen(port, () => {
     console.log(`Server is running in port ${port}`);
 });
 
+//Plan Database
+
 //1 to 1 user_game -> user_game_biodata
 //1 to N user_game -> user_game_history
 
-// user_game:
+// User_games:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. username (VARCHAR(100) NOT NULL UNIQUE)
 // 3. password (VARCHAR(100) NOT NULL)
 // 4. user_token (VARCHAR(100))
 // 5. role (ENUM('Super User', 'User') NOT NULL DEFAULT 'User')
 
-// user_game_biodata:
+// User_game_biodata:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. id_user (INT NOT NULL FOREIGN KEY UNIQUE)
 // 3. name (VARCHAR(100) NOT NULL)
@@ -94,7 +96,7 @@ app.listen(port, () => {
 // 5. birthdate (DATE NOT NULL)
 // 6. country (VARCHAR(100) NULL DEFAULT 'Indonesia')
 
-// user_game_history:
+// User_game_histories:
 // 1. id (INT NOT NULL AUTO_INCREMENT)
 // 2. id_user (INT NOT NULL FOREIGN KEY)
 // 3. time (INT NOT NULL)
