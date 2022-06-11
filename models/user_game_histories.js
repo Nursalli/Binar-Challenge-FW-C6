@@ -14,9 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       User_game_histories.belongsTo(models.User_games, {
         foreignKey: 'id'
       });
-      models.User_games.hasMany(User_game_histories, {
-        foreignKey: 'id_user'
-      });
     }
   }
   User_game_histories.init({
