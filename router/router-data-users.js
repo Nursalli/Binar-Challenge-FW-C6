@@ -31,9 +31,11 @@ routerDataUsers.get('/edit/:id', edit);
 routerDataUsers.put('/edit/:id', 
     [
         body('username').custom(async (data, { req }) => {
-            const user = await findUser(req.params.id);
+            const user = await findUser(parseInt(req.params.id));
             const check = await duplicate(data);
-            if(user.username !== req.body.username && check){
+            if(user == null) {
+                throw new Error('User Not Found!');
+            }else if(user.username !== req.body.username && check){
                 throw new Error('Username Already Exists');
             }else{
                 return true;

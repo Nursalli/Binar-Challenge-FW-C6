@@ -76,7 +76,12 @@ const addPost = (req, res) => {
 const findUser = (id) => {
     return User_games.findOne({
         where: {
-            id
+            [Op.and] : {
+                id,
+                role: {
+                    [Op.ne] : 'Super User'
+                }
+            }
         }
     });
 }
@@ -87,12 +92,17 @@ const edit = async (req, res) => {
 
     const data = await findUser(parseInt(req.params.id));
 
-    res.render('dashboard/edit/edit-data-user', {
-        layout: 'dashboard/layouts/main',
-        page,
-        title,
-        data
-    });
+    if(data){
+        res.render('dashboard/edit/edit-data-user', {
+            layout: 'dashboard/layouts/main',
+            page,
+            title,
+            data
+        });
+    } else {
+        req.flash('msgError', 'User Not Found!');
+        res.redirect('/dashboard/data-users');
+    }
 }
 
 const editPost = async (req, res) => {
